@@ -50,15 +50,28 @@
   </div>
 
   <script>
-    const btnConfirmar = document.getElementById('btnConfirmar');
-    btnConfirmar.addEventListener('click', () => {
+    const baseProductos = [
+      { nombre: 'Queso Cheddar', cantidad: 2 },
+      { nombre: 'Queso Parmesano', cantidad: 2 },
+      { nombre: 'Queso Azul', cantidad: 1 }
+    ];
+
+    // Cargar valores base en los campos, pero no mostrar lista aún
+    window.addEventListener('DOMContentLoaded', () => {
+      baseProductos.forEach((p, i) => {
+        document.getElementById('prod' + (i + 1)).value = p.nombre;
+        document.getElementById('cant' + (i + 1)).value = p.cantidad;
+      });
+    });
+
+    document.getElementById('btnConfirmar').addEventListener('click', () => {
       document.getElementById('pedido-confirmado').style.display = 'none';
       document.getElementById('carrito-vacio').style.display = 'none';
 
       const productos = [];
-      for (let i=1; i<=3; i++) {
-        const nombre = document.getElementById('prod'+i).value.trim();
-        const cant = parseInt(document.getElementById('cant'+i).value);
+      for (let i = 1; i <= 3; i++) {
+        const nombre = document.getElementById('prod' + i).value.trim();
+        const cant = parseInt(document.getElementById('cant' + i).value);
         if (nombre) productos.push({ nombre, cantidad: cant });
       }
 
@@ -67,8 +80,13 @@
         return;
       }
 
+      // Comprobar si es la lista base o fue modificada
+      const esBase = JSON.stringify(productos) === JSON.stringify(baseProductos);
+
       const lista = productos.map(p => `${p.nombre} x ${p.cantidad}`).join(', ');
-      document.getElementById('resumen-pedido').innerText = lista;
+      document.getElementById('resumen-pedido').innerText = esBase
+        ? `Lista base: ${lista}`
+        : `Lista actualizada: ${lista}`;
       document.getElementById('pedido-confirmado').style.display = 'block';
     });
   </script>
