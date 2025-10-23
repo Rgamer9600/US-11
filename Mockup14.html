@@ -56,7 +56,7 @@
       { nombre: 'Queso Azul', cantidad: 1 }
     ];
 
-    // Cargar valores base en los campos, pero no mostrar lista aún
+
     window.addEventListener('DOMContentLoaded', () => {
       baseProductos.forEach((p, i) => {
         document.getElementById('prod' + (i + 1)).value = p.nombre;
@@ -80,7 +80,7 @@
         return;
       }
 
-      // Comprobar si es la lista base o fue modificada
+      // Comprobar si es la lista correcta o fue modificada
       const esBase = JSON.stringify(productos) === JSON.stringify(baseProductos);
 
       const lista = productos.map(p => `${p.nombre} x ${p.cantidad}`).join(', ');
@@ -93,3 +93,4 @@
 
 </body>
 </html>
+
